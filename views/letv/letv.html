@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>乐视云视频下载</title>
+    <link rel="stylesheet" href="">
+    <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+</head>
+<body>
+	<div style="width:1000px; margin: 0 auto; margin-top: 100px;">
+        <label style="display: block; font-size: 20px; font-weight: 600">视频ID: </label>
+        <div style="margin-top: 20px">
+            <input type="text" name="" value="" placeholder="请输入乐视云视频id" class="video_id" style="width:300px; padding: 6px 10px; height: 30px; font-size:16px;">
+            <input type="button" name="" value="下载" class="download_btn" style="height: 42px; padding: 6px 15px; cursor: pointer;">
+        </div>
+    </div>
+    <script>
+        var url = 'http://192.168.7.223:8888/getDownloadInfo'
+        $('.download_btn').on('click', function(){
+            var id = $('.video_id').val()
+            var params = {id}
+            $.ajax({
+                url: url + '?vid=' + id,
+                type: 'get',
+                dataType: 'jsonp',
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                    "Accept": "application/json; charset=utf-8"
+                }
+            }).then(res => {
+                console.log(res)
+                if (res.code == 0) {
+                    window.open(res.data.download_url)
+                }
+            })
+        })
+    </script>
+</body>
+</html>
